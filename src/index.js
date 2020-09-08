@@ -43,8 +43,10 @@ const server = (state) => {
 const win = (state) => {
   let {player1, player2} = state ;
   let win = 0;
-  if (player1 >= 21) {win=1}
-  if (player2 >= 21) {win=2}
+  if (Math.abs(player1-player2) >=2){
+    if (player1 >= 21) {win=1}
+    if (player2 >= 21) {win=2}
+  }
   return(
     {...state, winner: win  }
   )
