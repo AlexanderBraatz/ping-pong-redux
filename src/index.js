@@ -34,9 +34,12 @@ const scoreP2 = (state) => ({ ...state, player2: state.player2 + 1 });
 const server = (state) => { 
   let {player1, player2} = state ;
   let sum =  player1 +  player2 ;
-  return(
+  let alternate = sum % 10 < 5;
 
-    {...state, servingP1: sum % 10 < 5 }
+  if (player1>=20 && player2>=20){ alternate = sum % 4 < 2;}
+  else{alternate = sum % 10 < 5;}
+  return(
+    {...state, servingP1: alternate }
   );
 }
 //handle who has won
