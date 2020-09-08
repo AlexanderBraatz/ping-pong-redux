@@ -20,15 +20,13 @@ const initial = {
 // defining a reducer that can handle dispatched actions and change the state appropriately 
 const reducer = (state, action) => { 
   switch(action.type){
-    case "INCREMENT_PL1" : return win(server(scoreP1(state)));
-    case "INCREMENT_PL2" : return win(server(scoreP2(state))); //chaining means server is passed the up to date state
+    case "INCREMENT" : return win(server(score(state, action)));//chaining means server is passed the up to date state
     case "RESET" : return initial;
     default: return state;
   }
 }
 //reducer logic
-const scoreP1 = (state) => ({ ...state, player1: state.player1 + 1 });
-const scoreP2 = (state) => ({ ...state, player2: state.player2 + 1 });
+const score = (state,{who}) => ({ ...state, [who] : state[who] + 1 });
 //reducer business logic
 //handle who is serving
 const server = (state) => { 
@@ -68,11 +66,11 @@ const render = () =>{
 
 // handeling events
   const handleScoreFor1 = () => {
-    store.dispatch({type: "INCREMENT_PL1",});
+    store.dispatch({type: "INCREMENT", who : "player1"});
     console.log(winner)
   }
   const handleScoreFor2 = () => {
-    store.dispatch({type: "INCREMENT_PL2",})
+    store.dispatch({type: "INCREMENT", who : "player2"})
   }
   const reset = () => {
     store.dispatch({ type: "RESET"})
