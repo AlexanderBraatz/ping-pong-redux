@@ -2,8 +2,9 @@ import React from "react";
 import Header from "./components/Header";
 import ScoreCard from "./components/ScoreCard";
 import WinAlert from "./components/WinAlert";
+import HistoryList from "./components/HistoryList";
 
-const App = ({score1, score2, handleScoreFor1, handleScoreFor2, reset, servingP1, winner } ) => (
+const App = ({score1, score2, handleScoreFor1, handleScoreFor2, reset, servingP1, winner, history } ) => (
     <React.Fragment>
         {/* header */}
         <Header />
@@ -33,8 +34,9 @@ const App = ({score1, score2, handleScoreFor1, handleScoreFor2, reset, servingP1
         { /* reset button */}
         <button 
           onClick={ reset }
-          className="btn btn-danger"
+          className="btn btn-danger mb-2"
         >Reset</button>
+        <HistoryList history= {history}/>
     </React.Fragment>
 );
 

@@ -4,7 +4,8 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-import { createStore } from "redux";
+import { createStore, compose } from "redux";
+import persistState from "redux-localstorage";
 
 
 
@@ -14,6 +15,7 @@ const initial = {
   player2: 0,
   servingP1: true,
   winner: 0,
+  history: [],
 };
 
 //----------------------------------------------reducer
@@ -21,12 +23,12 @@ const initial = {
 const reducer = (state, action) => { 
   switch(action.type){
     case "INCREMENT" : return win(server(score(state, action)));//chaining means server is passed the up to date state
-    case "RESET" : return initial;
+    case "RESET" : return reset(track(state));
     default: return state;
   }
 }
 //reducer logic
-const score = (state,{who}) => ({ ...state, [who] : state[who] + 1 });
+const score = (state, {who}) => ({ ...state, [who] : state[who] + 1 });
 //reducer business logic
 //handle who is serving
 const server = (state) => { 
@@ -53,21 +55,52 @@ const win = (state) => {
   )
 }
 
+//handle reset, without losing the history
+const reset = (state) => ({...initial, history : state.history});
+
+// handle tracking the hisory of past games
+const track = (state) => {
+  let {player1, player2, winner, history} = state;
+
+  let lastResults = {
+    player_1: {
+        score: player1,
+        won: winner === 1,
+    },
+
+    player_2: {
+        score: player2,
+        won: winner === 2,
+    }
+  };
+
+  let newHistory = [...history,lastResults];
+console.log(history);
+
+  return({...state, history : newHistory })
+}
+
 //----------------------------------------------reducer
 
-// making a redux store with my reducer and initial state
-const store = createStore(reducer, initial); 
+// making a redux store with my reducer and initial state and implementing redux-localstorage
+const composeEnhancers =
+window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(
+reducer,
+initial,
+composeEnhancers(persistState())
+);
+
 
 
 // making a render function that re-renders the whole app when called 
 const render = () =>{
 
-  let {player1, player2, servingP1, winner} = store.getState();
+  let {player1, player2, servingP1, winner, history} = store.getState();
 
 // handeling events
   const handleScoreFor1 = () => {
     store.dispatch({type: "INCREMENT", who : "player1"});
-    console.log(winner)
   }
   const handleScoreFor2 = () => {
     store.dispatch({type: "INCREMENT", who : "player2"})
@@ -76,7 +109,7 @@ const render = () =>{
     store.dispatch({ type: "RESET"})
   }
 
-
+console.log(history);
 
   ReactDOM.render(
     <React.StrictMode>
@@ -88,6 +121,7 @@ const render = () =>{
         servingP1= { servingP1 }
         winner = {winner}
         reset= { reset }
+        history= {history}
       />
     </React.StrictMode>,
     document.getElementById('root')
