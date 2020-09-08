@@ -1,6 +1,6 @@
 import React from "react";
 
-const App = ({score1, score2 } ) => (
+const App = ({score1, score2, handleScoreFor1, handleScoreFor2, reset } ) => (
     <React.Fragment>
         {/* header */}
         <header className="jumbotron mt-4 mb-0">
@@ -16,7 +16,10 @@ const App = ({score1, score2 } ) => (
                         <p className="card-text display-1">{ score1 }</p>
                     </div>
                     <div className="card-footer">
-                        <button className="form-control btn btn-success">+</button>
+                        <button 
+                          onClick={handleScoreFor1}
+                          className="form-control btn btn-success"
+                        >+</button>
                     </div>
                 </div>
             </div>
@@ -28,7 +31,10 @@ const App = ({score1, score2 } ) => (
                         <p className="card-text display-1">{ score2 }</p>
                     </div>
                     <div className="card-footer">
-                        <button className="form-control btn btn-success">+</button>
+                        <button
+                          onClick={handleScoreFor2}
+                          className="form-control btn btn-success"
+                        >+</button>
                     </div>
                 </div>
             </div>
@@ -40,7 +46,10 @@ const App = ({score1, score2 } ) => (
         <hr />
 
         { /* reset button */}
-        <button className="btn btn-danger">Reset</button>
+        <button 
+          onClick={ reset }
+          className="btn btn-danger"
+        >Reset</button>
     </React.Fragment>
 );
 

@@ -20,6 +20,7 @@ const reducer = (state, action) => {
   switch(action.type){
     case "INCREMENT_PL1" : return { ...state, player1: state.player1 + 1 };
     case "INCREMENT_PL2" : return { ...state, player2: state.player2 + 1 };
+    case "RESET" : return initial;
     default: return state;
   }
 }
@@ -32,7 +33,16 @@ const store = createStore(reducer, initial);
 const render = () =>{
 
   let {player1, player2} = store.getState();
-  console.log(player1);
+
+  const handleScoreFor1 = () => {
+    store.dispatch({type: "INCREMENT_PL1",})
+  }
+  const handleScoreFor2 = () => {
+    store.dispatch({type: "INCREMENT_PL2",})
+  }
+  const reset = () => {
+    store.dispatch({ type: "RESET"})
+  }
 
 
   ReactDOM.render(
@@ -40,6 +50,9 @@ const render = () =>{
       <App 
         score1={player1}  
         score2={player2}
+        handleScoreFor1={ handleScoreFor1 }
+        handleScoreFor2={ handleScoreFor2 }
+        reset= { reset }
       />
     </React.StrictMode>,
     document.getElementById('root')
