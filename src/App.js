@@ -15,19 +15,21 @@ const App = ({score1, score2, handleScoreFor1, handleScoreFor2, reset, servingP1
             serving = { servingP1 }
             score = { score1 }
             handleScore = { handleScoreFor1 }
+            winner= { winner }
           />
           <ScoreCard 
             player = "2"
             serving = { !servingP1 }
             score = { score2 }
             handleScore = { handleScoreFor2 }
+            winner= { winner }
           />
         </div>
 
         { /* winner message */}
         <WinAlert winner= { winner } />
         <hr />
-        
+
         { /* reset button */}
         <button 
           onClick={ reset }

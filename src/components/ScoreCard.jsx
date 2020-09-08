@@ -1,5 +1,5 @@
 import React from "react";
-const ScoreCard = ({player, serving, score, handleScore}) =>(
+const ScoreCard = ({player, serving, score, handleScore, winner}) =>(
 
     <div className="col-md-6 mt-4">
     <div className={`card text-center ${serving ?"bg-dark text-white": ""}`}>
@@ -10,7 +10,8 @@ const ScoreCard = ({player, serving, score, handleScore}) =>(
         <div className="card-footer">
             <button 
               onClick={ handleScore }
-              className="form-control btn btn-success"
+              className={`form-control btn btn-success ${ winner>0 ? `disabled`: `` }`}
+              disabled = { winner>0 }
             >+</button>
         </div>
     </div>
