@@ -12,18 +12,32 @@ import { createStore } from "redux";
 const initial = { 
   player1: 0,
   player2: 0,
+  servingP1: true,
 };
 
-
+//----------------------------------------------reducer
 // defining a reducer that can handle dispatched actions and change the state appropriately 
 const reducer = (state, action) => { 
   switch(action.type){
-    case "INCREMENT_PL1" : return { ...state, player1: state.player1 + 1 };
-    case "INCREMENT_PL2" : return { ...state, player2: state.player2 + 1 };
+    case "INCREMENT_PL1" : return server(scoreP1(state));
+    case "INCREMENT_PL2" : return server(scoreP2(state)); //chaining means server is passed the up to date state
     case "RESET" : return initial;
     default: return state;
   }
 }
+//reducer logic
+const scoreP1 = (state) => ({ ...state, player1: state.player1 + 1 });
+const scoreP2 = (state) => ({ ...state, player2: state.player2 + 1 });
+//reducer business logic
+const server = (state) => { 
+  let sum =  state.player1 +  state.player2 ;
+  return(
+
+    {...state, servingP1: sum % 10 < 5 }
+  );
+}
+
+//----------------------------------------------reducer
 
 // making a redux store with my reducer and initial state
 const store = createStore(reducer, initial); 
@@ -32,8 +46,9 @@ const store = createStore(reducer, initial);
 // making a render function that re-renders the whole app when called 
 const render = () =>{
 
-  let {player1, player2} = store.getState();
+  let {player1, player2, servingP1} = store.getState();
 
+// handeling events
   const handleScoreFor1 = () => {
     store.dispatch({type: "INCREMENT_PL1",})
   }
@@ -45,6 +60,7 @@ const render = () =>{
   }
 
 
+
   ReactDOM.render(
     <React.StrictMode>
       <App 
@@ -52,6 +68,7 @@ const render = () =>{
         score2={player2}
         handleScoreFor1={ handleScoreFor1 }
         handleScoreFor2={ handleScoreFor2 }
+        servingP1= { servingP1 }
         reset= { reset }
       />
     </React.StrictMode>,
