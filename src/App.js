@@ -1,53 +1,33 @@
 import React from "react";
+import Header from "./components/Header";
+import ScoreCard from "./components/ScoreCard";
+import WinAlert from "./components/WinAlert";
 
 const App = ({score1, score2, handleScoreFor1, handleScoreFor2, reset, servingP1, winner } ) => (
     <React.Fragment>
         {/* header */}
-        <header className="jumbotron mt-4 mb-0">
-            <h1>PongPing</h1>
-        </header>
+        <Header />
 
         {/* scores */}
         <div className="row mb-4">
-            <div className="col-md-6 mt-4">
-                <div className={`card text-center ${servingP1 ?"bg-dark text-white": ""}`}>
-                    <h5 className="card-header">Player 1</h5>
-                    <div className="card-body">
-                        <p className="card-text display-1">{ score1 }</p>
-                    </div>
-                    <div className="card-footer">
-                        <button 
-                          onClick={handleScoreFor1}
-                          className="form-control btn btn-success"
-                        >+</button>
-                    </div>
-                </div>
-            </div>
-
-            <div className="col-md-6 mt-4">
-                <div className={`card text-center ${!servingP1 ?"bg-dark text-white": ""}`}>
-                    <h5 className="card-header">Player 2</h5>
-                    <div className="card-body">
-                        <p className="card-text display-1">{ score2 }</p>
-                    </div>
-                    <div className="card-footer">
-                        <button
-                          onClick={handleScoreFor2}
-                          className="form-control btn btn-success"
-                        >+</button>
-                    </div>
-                </div>
-            </div>
+          <ScoreCard 
+            player = "1"
+            serving = { servingP1 }
+            score = { score1 }
+            handleScore = { handleScoreFor1 }
+          />
+          <ScoreCard 
+            player = "2"
+            serving = { !servingP1 }
+            score = { score2 }
+            handleScore = { handleScoreFor2 }
+          />
         </div>
 
         { /* winner message */}
-        {winner === 0 ? null: 
-          <h2 className="alert alert-success">Player {winner>1 ? "2": "1"} wins!</h2>  
-        }
-        
-
+        <WinAlert winner= { winner } />
         <hr />
-
+        
         { /* reset button */}
         <button 
           onClick={ reset }
