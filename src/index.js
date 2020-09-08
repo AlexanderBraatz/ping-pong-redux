@@ -13,14 +13,15 @@ const initial = {
   player1: 0,
   player2: 0,
   servingP1: true,
+  winner: 0,
 };
 
 //----------------------------------------------reducer
 // defining a reducer that can handle dispatched actions and change the state appropriately 
 const reducer = (state, action) => { 
   switch(action.type){
-    case "INCREMENT_PL1" : return server(scoreP1(state));
-    case "INCREMENT_PL2" : return server(scoreP2(state)); //chaining means server is passed the up to date state
+    case "INCREMENT_PL1" : return win(server(scoreP1(state)));
+    case "INCREMENT_PL2" : return win(server(scoreP2(state))); //chaining means server is passed the up to date state
     case "RESET" : return initial;
     default: return state;
   }
@@ -29,12 +30,24 @@ const reducer = (state, action) => {
 const scoreP1 = (state) => ({ ...state, player1: state.player1 + 1 });
 const scoreP2 = (state) => ({ ...state, player2: state.player2 + 1 });
 //reducer business logic
+//handle who is serving
 const server = (state) => { 
-  let sum =  state.player1 +  state.player2 ;
+  let {player1, player2} = state ;
+  let sum =  player1 +  player2 ;
   return(
 
     {...state, servingP1: sum % 10 < 5 }
   );
+}
+//handle who has won
+const win = (state) => {
+  let {player1, player2} = state ;
+  let win = 0;
+  if (player1 >= 21) {win=1}
+  if (player2 >= 21) {win=2}
+  return(
+    {...state, winner: win  }
+  )
 }
 
 //----------------------------------------------reducer
@@ -46,11 +59,12 @@ const store = createStore(reducer, initial);
 // making a render function that re-renders the whole app when called 
 const render = () =>{
 
-  let {player1, player2, servingP1} = store.getState();
+  let {player1, player2, servingP1, winner} = store.getState();
 
 // handeling events
   const handleScoreFor1 = () => {
-    store.dispatch({type: "INCREMENT_PL1",})
+    store.dispatch({type: "INCREMENT_PL1",});
+    console.log(winner)
   }
   const handleScoreFor2 = () => {
     store.dispatch({type: "INCREMENT_PL2",})
@@ -69,6 +83,7 @@ const render = () =>{
         handleScoreFor1={ handleScoreFor1 }
         handleScoreFor2={ handleScoreFor2 }
         servingP1= { servingP1 }
+        winner = {winner}
         reset= { reset }
       />
     </React.StrictMode>,
