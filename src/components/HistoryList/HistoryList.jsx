@@ -33,4 +33,10 @@ const HistoryList = ({history}) =>(
     </>
 );
  
+// unique key?
+// key={(i+1)*11}
+// key={(i+1)*13}
+// key={(i+1)*17}
+// key={(i+1)*19}
+// key={(i+1)*23}
 export default HistoryList;
