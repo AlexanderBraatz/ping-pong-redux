@@ -1,5 +1,5 @@
 import React from "react";
-const HistoryList = ({history}) =>(
+const HistoryList = ({history, name1, name2}) =>(
     <>
         <div className="card bg-dark mt-2 mb-2">
             <div className="bg-dark text-white text-center">Results</div>
@@ -7,8 +7,8 @@ const HistoryList = ({history}) =>(
                 <thead>
                     <tr>
                     <th scope="col">Game</th>
-                    <th scope="col">Player 1</th>
-                    <th scope="col">Player 2</th>
+                    <th scope="col">{name1}</th>
+                    <th scope="col">{name2}</th>
                     <th scope="col">Winner</th>
                     </tr>
                 </thead>
@@ -20,7 +20,7 @@ const HistoryList = ({history}) =>(
                                 <th scope="row">{i+1}</th>
                                 <td>{game.player_1.score}</td>
                                 <td>{game.player_2.score}</td>
-                                <td>{game.player_1.won ? "Player One":"Player Two"}</td>
+                                <td>{game.player_1.won ? name1 : name2 }</td>
                                 </tr>
                             </>
                             ))

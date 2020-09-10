@@ -3,13 +3,13 @@ import ScoreCard from "./ScoreCard";
 import { increment } from "../../data/actions"
 
 
-const mapStateToProps = (state) => {
-    let {servingP1, player2, winner } = state;
+const mapStateToProps = ({servingP1, player2, winner, name2}) => {
+ 
     return({
-        player : "2",
         serving : !servingP1,
         score : player2,
-        winner : winner,
+        winner,
+        name : name2,
     });
 };
 

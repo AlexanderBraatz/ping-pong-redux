@@ -6,12 +6,12 @@ import { increment } from "../../data/actions"
 
 
 const mapStateToProps = (state) => {
-    let {servingP1,player1, winner } = state;
+    let {servingP1,player1, winner, name1} = state;
     return({
-        player : "1",
         serving : servingP1,
         score : player1,
-        winner : winner,
+        winner,
+        name : name1,
     });
 };
 

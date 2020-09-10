@@ -8,3 +8,7 @@ export const increment = (number) =>{
 export const reset = () =>{
     return({ type: "RESET"})
 };
+
+export const startWith = (name1, name2, winScore, alternation) =>{
+    return({type:"START",name1, name2, winScore, alternation})
+}

@@ -12,12 +12,8 @@ import initial from "./data/initial";
 import reducer from "./data/reducers";
 
 
-
-
-
-
-
 // making a redux store with my reducer and initial state and implementing redux-localstorage
+
 const composeEnhancers =
 window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
@@ -25,10 +21,6 @@ reducer,
 initial,
 composeEnhancers(persistState())
 );
-
-
-
-
 
 
 ReactDOM.render(
