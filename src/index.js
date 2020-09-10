@@ -9,7 +9,8 @@ import persistState from "redux-localstorage";
 import { Provider } from "react-redux";
 
 import initial from "./data/initial";
-import reducer from "./data/reducers"
+import reducer from "./data/reducers";
+
 
 
 
@@ -27,31 +28,35 @@ composeEnhancers(persistState())
 
 
 
-// handeling events
-  const handleScoreFor1 = () => {
-    store.dispatch({type: "INCREMENT", who : "player1"});
-  }
-  const handleScoreFor2 = () => {
-    store.dispatch({type: "INCREMENT", who : "player2"})
-  }
-  const resetit = () => {
-    store.dispatch({ type: "RESET"})
-  }
 
 
-    ReactDOM.render(
-      <React.StrictMode>
-         <Provider store={ store }> {/*uses store and it's children prop under the hood too open the way for props from the store to the components */}
-          <App 
-            handleScoreFor1={ handleScoreFor1 }
-            handleScoreFor2={ handleScoreFor2 }
 
-            resetit= { resetit }
-          />
-        </Provider>
-      </React.StrictMode>,
-      document.getElementById('root')
-    );
+ReactDOM.render(
+  <React.StrictMode>
+      <Provider store={ store }> 
+      <App />
+    </Provider>
+  </React.StrictMode>,
+  document.getElementById('root')
+);
+
+/*^<Provider store= { store }>uses store and it's children props under the hood too open the way for props from the store to the components */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

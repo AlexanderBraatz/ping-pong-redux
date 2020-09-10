@@ -1,5 +1,8 @@
 import { connect } from "react-redux";
 import ScoreCard from "./ScoreCard";
+import { increment } from "../../data/actions"
+
+
 
 
 const mapStateToProps = (state) => {
@@ -9,10 +12,19 @@ const mapStateToProps = (state) => {
         serving : servingP1,
         score : player1,
         winner : winner,
-    })
+    });
 };
 
-export default connect(mapStateToProps)(ScoreCard)
+
+
+const mapDispatchToProps = (dispatch) => {
+    return({
+        handleScore : () => dispatch(increment(1)),
+    });
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(ScoreCard)
 //^connect also subscribes ScoreCard to the store, so its re rendered with every state change !!
 
 
