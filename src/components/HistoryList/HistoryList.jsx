@@ -15,14 +15,12 @@ const HistoryList = ({history, name1, name2}) =>(
                 <tbody>
                     { history===[] ? null :  
                         history.map((game, i)=>(
-                            <>
-                                <tr>
+                                <tr key={i}>
                                 <th scope="row">{i+1}</th>
                                 <td>{game.player_1.score}</td>
                                 <td>{game.player_2.score}</td>
                                 <td>{game.player_1.won ? name1 : name2 }</td>
                                 </tr>
-                            </>
                             ))
                     }
 

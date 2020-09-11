@@ -3,24 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
-
-import { createStore, compose } from "redux";
-import persistState from "redux-localstorage";
 import { Provider } from "react-redux";
 
-import initial from "./data/initial";
-import reducer from "./data/reducers";
+import store from "./data/store";
 
-
-// making a redux store with my reducer and initial state and implementing redux-localstorage
-
-const composeEnhancers =
-window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(
-reducer,
-initial,
-composeEnhancers(persistState())
-);
 
 
 ReactDOM.render(
